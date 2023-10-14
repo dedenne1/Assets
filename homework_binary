@@ -1,0 +1,57 @@
+decimal_num = int(input("Enter a decimal number: "))
+
+def check_valid_num_of_bits(decimal_num):
+    temp_num = 0
+    valid = False
+    while not valid:
+        num_of_bits = int(input("Enter a valid number of bits: "))
+        max_num = 2**num_of_bits - 1
+        if decimal_num <= max_num:
+            valid = True
+            temp_num = num_of_bits
+    return temp_num
+
+num_of_bits = check_valid_num_of_bits(decimal_num)
+
+def convert_from_decimal_to_binary(decimal_num, num_of_bits):
+    binary_list = []
+    while decimal_num > 0:
+        temp = decimal_num % 2
+        binary_list.insert(0, str(temp))
+        decimal_num //= 2
+    while len(binary_list) < num_of_bits:
+        binary_list.insert(0, '0')
+    return binary_list
+
+binary_list = convert_from_decimal_to_binary(decimal_num, num_of_bits)
+
+def convert_to_opposite(binary_list):
+    i =len(binary_list)-1
+    opposite_list =[]
+    while i >= 0:
+        if binary_list[i] == '1':
+            opposite_list.insert(0,'0')
+        else:
+            opposite_list.insert(0,'1')
+        i-=1
+    return opposite_list
+
+def The_twos_complement_method(binary_list):
+    opposite_list = convert_to_opposite(binary_list)
+    temp =1
+    i = len(binary_list)-1
+    while i >=0:
+        if opposite_list[i] == '1':
+            if temp ==1:
+                opposite_list[i]='0'
+            
+        elif opposite_list[i] == '0':
+            if temp ==1:
+                opposite_list[i]='1'
+                temp=0
+        i-=1
+    return opposite_list
+The_twos_complement_method_number =The_twos_complement_method(binary_list)
+binary_string = ''.join(binary_list)
+opposite_string = ''.join(The_twos_complement_method_number)
+print(f"the binary form of {decimal_num} with {num_of_bits} bits is: {binary_string} but to show the same number but nagative we need to use The two's complement method the number is: {opposite_string}")
